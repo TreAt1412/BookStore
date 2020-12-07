@@ -1,0 +1,504 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,100&display=swap');
+
+li,
+a,
+button {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+
+}
+
+header {
+    display: flex;
+    align-items: center;
+    background-color: rgb(15, 138, 209);
+    height: 100px;
+    width: 100%;
+}
+
+.logo {
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    position: relative;
+    width: 25%;
+    float: left;
+    padding-left: 25px;
+}
+.logo i{
+    padding-right: 10px;
+}
+.header-link a i {
+    padding-right: 10px;
+    position: relative;
+    padding-top: 20px;
+}
+
+.header-link a {
+    padding-right: 40px;
+    position: relative;
+    float: left;
+}
+
+.header-link {
+    position: relative;
+    width: 40%;
+    padding-left: 25px;
+}
+
+.tracking-odered span:hover {
+    color: rgb(226, 215, 63);
+}
+
+.book-order {
+    float: left;
+    align-items: center;
+    width: 60%;
+    position: relative;
+    top: 19px;
+}
+.myform{
+	float: left;
+	width: 50%;
+}
+
+.dropdown {
+    position: relative;
+    float: left;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 42px;
+    border-radius: 10%;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    transition: 0.5s;
+    transition-property: background;
+    font-size: 16px;
+}
+
+.dropdown span:hover {
+    color: rgb(226, 215, 63);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.search-container {
+    width: 35%;
+    float: left;
+    padding-left: 25px;
+    position: relative;
+    height: 100%;
+}
+
+.enter-for-search {
+    width: 70%;
+    float: left;
+    position: relative;
+}
+
+.enter-for-search input[type=text] {
+    width: 100%;
+    float: left;
+    position: relative;
+    height: 30px;
+    top: 40px;
+    border-radius: 4px;
+    border: none !important;
+    text-align: left;
+}
+
+.button-search {
+    width: 15%;
+    float: left;
+    position: relative;
+}
+
+.button-search button {
+    color: rgb(74, 74, 74);
+    width: 100%;
+    float: left;
+    position: relative;
+    height: 32px;
+    top: 40px;
+    border-radius: 4px;
+    left: 10px;
+    border: none !important;
+}
+
+.button-search button span {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgb(74, 74, 74);
+    text-decoration: none;
+    padding-left: 2px;
+}
+.button-search button:hover{
+    background-color: rgb(89, 224, 224);
+}
+::placeholder {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+main {
+    width: 100%;
+    height: 1300px;
+}
+
+.nav-left {
+    width: 16%;
+    left: 10px;
+    background-color: white;
+    height: 400px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    float: left;
+}
+
+.bar-1 {
+    width: 100%;
+    height: 50px;
+}
+
+.main-span {
+    color: white;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    height: 20px;
+    width: 20px;
+}
+
+.main-span-1 {
+    color: rgb(19, 16, 16);
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+
+}
+
+.span-1 {
+    color: black;
+    padding-left: 35px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 12px;
+}
+
+.bar-1:hover {
+    background-color: rgb(218, 179, 179);
+}
+
+.list span:hover {
+    color: rgb(94, 56, 184);
+}
+
+
+.content1 {
+    position: relative;
+    margin: 130px auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.content1 .text {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #202020;
+}
+
+.content1 .p {
+    font-size: 2.1875rem;
+    font-weight: 600;
+    color: #202020;
+}
+
+footer {
+    font-size: 14px;
+    bottom: 0px;
+    width: 100%;
+    background: white;
+    font-family: "Montserrat", sans-serif;
+}
+
+.main-content {
+    display: flex;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.main-content .box {
+    flex-basis: 50%;
+    padding: 10px 20px;
+}
+
+.box h2 {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.box .content {
+    margin: 20px 0 0 0;
+    position: relative;
+}
+
+.box .content:before {
+    position: absolute;
+    content: '';
+    top: -10px;
+    height: 2px;
+    width: 100%;
+    background: #1a1a1a;
+}
+
+.box .content:after {
+    position: absolute;
+    content: '';
+    height: 2px;
+    width: 15%;
+    background: #f12020;
+    top: -10px;
+}
+
+.left .content p {
+    text-align: justify;
+}
+
+.left .content .social {
+    margin: 20px 0 0 0;
+}
+
+.left .content .social a {
+    padding: 0 2px;
+}
+
+.left .content .social a span {
+    height: 40px;
+    width: 40px;
+    background: #3498db;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.left .content .social a span:hover {
+    background: #f12020;
+}
+
+.center .content .fas {
+    font-size: 1.4375rem;
+    background: #3498db;
+    height: 45px;
+    width: 45px;
+    line-height: 45px;
+    text-align: center;
+    border-radius: 50%;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.center .content .fas:hover {
+    background: #f12020;
+}
+
+.center .content .text {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+.center .content .phone {
+    margin: 15px 0;
+}
+
+.right form .text {
+    font-size: 1.0625rem;
+    margin-bottom: 2px;
+    color: #656565;
+}
+
+.right form .msg {
+    margin-top: 10px;
+}
+
+.right form input,
+.right form .msgForm {
+    width: 100%;
+    font-size: 1.0625rem;
+    background: white;
+    padding-left: 10px;
+    border: 1px solid #222222;
+}
+
+.right form input:focus,
+.right form .msgForm:focus {
+    outline-color: #3498db;
+}
+
+.right form input {
+    height: 35px;
+    width: 400px;
+
+}
+
+.right form .btn {
+    margin-top: 10px;
+}
+
+.right form .btn button {
+    height: 40px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: #3498db;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.right form .btn button:hover {
+    background: #f12020;
+}
+
+.bottom center {
+    padding: 5px;
+    font-size: 0.9375rem;
+    background: white;
+}
+
+.bottom center span {
+    color: #656565;
+}
+
+.bottom center a {
+    color: #f12020;
+    text-decoration: none;
+}
+
+.bottom center a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 900px) {
+    footer {
+        position: relative;
+        bottom: 0px;
+    }
+
+    .main-content {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .main-content .box {
+        margin: 5px 0;
+    }
+}
+.menu-bar{
+    width: 84%;
+    height: 60px;
+    float: left;
+    color: rgb(37, 30, 20);
+    box-shadow: 0px 8px 16px 0px rgba(109, 101, 101, 0.2);
+    background-color: rgba(255, 255, 255, 0.493);
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-align: left;
+}
+.text-bar{
+    padding-left: 30px;
+    float: left;
+}
+.text-bar a{
+    color: black;
+    font-size: 14px;
+}
+.text-bar a span:hover{
+    color: rgba(221, 154, 66, 0.774);
+}
+.display-book{
+	width: 70%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	float: left;
+	padding-left: 20px;
+}
+.one-book{
+	width: 30%;
+	float: left;
+	position: relative;
+	top: 20px;
+	left: 20px;
+	padding-bottom: 20px;
+	
+}
+.one-book:hover{
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.button-add button{
+	background-color: rgb(253, 216, 53);
+    border-radius: 3px;
+    border: none;
+    font-size: 12px;
+    width: 50px;
+    color: black;
+    height: 30px;
+}
+.button-add button:hover{
+	background-color: yellow;
+}
+
+.control-btn{
+	background-color: rgb(15, 138, 209);
+	border: none;
+}
+.control-btn:hover{
+	color: yellow;
+}
+.content-book{
+	padding-left: 50px;
+}
+.button-add{
+	padding-left: 50px;
+}
+.display-book h2{
+	font-family: "Montserrat", sans-serif;
+	font-size: 20px;
+	color: rgb(15, 138, 209);
+}

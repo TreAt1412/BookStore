@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+		http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>BookStore</display-name>
+	
+  	<servlet>
+        <servlet-name>servlet1</servlet-name>
+        <servlet-class>web.Login</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet1</servlet-name>
+	    <url-pattern>/</url-pattern>
+	  </servlet-mapping>
+	  
+	<servlet>
+        <servlet-name>servlet2</servlet-name>
+        <servlet-class>web.Home</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet2</servlet-name>
+	    <url-pattern>/Home</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet3</servlet-name>
+        <servlet-class>web.AddToCart</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet3</servlet-name>
+	    <url-pattern>/AddToCart</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet4</servlet-name>
+        <servlet-class>web.Cart</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet4</servlet-name>
+	    <url-pattern>/Cart</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet5</servlet-name>
+        <servlet-class>web.Search</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet5</servlet-name>
+	    <url-pattern>/Search</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet6</servlet-name>
+        <servlet-class>web.Book</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet6</servlet-name>
+	    <url-pattern>/Book</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet7</servlet-name>
+        <servlet-class>web.OrderHistory</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet7</servlet-name>
+	    <url-pattern>/OrderHistory</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet8</servlet-name>
+        <servlet-class>web.Profile</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet8</servlet-name>
+	    <url-pattern>/Profile</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

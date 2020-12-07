@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,100&display=swap');
+
+#display-account{
+    width: 80%;
+    float: left;
+    height: 700px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    padding-left: 20px;
+}
+#display-account-1{
+    width: 100%;
+    height: 75px;
+    background-color: rgba(255, 255, 255, 0.493);
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-align: left;
+    float: left;
+}
+#display-account-1 span{
+    padding-left: 20px;
+    font-size: 18px;
+}
+#display-account-2{
+    width: 100%;
+    height: 400px;
+    float: left;
+}
+.form-control{
+    width: 70%;
+    float: left;
+    text-align: left;
+    padding-left: 20px;
+    height: 50px;
+}
+.label{
+    width: 20%;
+    float: left;
+    padding-top: 10px;
+}
+.display{
+    width: 50%;
+    float: left;
+}
+.display input[type=text]{
+    width: 100%;
+    height: 30px;
+    border-radius: 3px;
+    border: solid 1px;
+}
+.display button{
+    width: 35%;
+    height: 30px;
+    border-radius: 3px;
+    border: none;
+    background-color: rgb(253, 216, 53);
+    color: black;
+    font-size: 14px;
+}
+.display button:hover{
+    background-color: yellow;
+}
