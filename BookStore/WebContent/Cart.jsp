@@ -42,9 +42,9 @@
         </div>
         <!-- for search form -->
         <div class="search-container">
-            <form action="#">
+            <form action="Search" method="post">
                 <div class="enter-for-search">
-                    <input type="text" placeholder=" Tìm kiếm sách mong muốn.." name="search">
+                    <input type="text" placeholder=" Tìm kiếm sách mong muốn.." name="keyword">
                 </div>
                 <div class="button-search">
                     <button type="submit"><i class="fa fa-search"></i><span>Tìm</span></button>
@@ -54,7 +54,7 @@
         <!-- for nav bar -->
         <div class="header-link">
             <div class="book-order">
-                <form class="myform" action="Cart" method="post">
+                <form class="myform" action="OrderHistory" method="post">
                     <button class="control-btn">
                         <i class="fa fa-shopping-bag fa-lg"></i>
                         <span>Đơn hàng </span>

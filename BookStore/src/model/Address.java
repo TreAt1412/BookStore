@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Address implements Serializable {
 	private int id;
-	private String province, district, ward, detail;
+	private String detail;
 	private int customerID;
 	/**
 	 * @param id
@@ -14,12 +14,10 @@ public class Address implements Serializable {
 	 * @param detail
 	 * @param customerID
 	 */
-	public Address(int id, String province, String district, String ward, String detail, int customerID) {
+	public Address(int id, String detail, int customerID) {
 		super();
 		this.id = id;
-		this.province = province;
-		this.district = district;
-		this.ward = ward;
+		
 		this.detail = detail;
 		this.customerID = customerID;
 	}
@@ -29,24 +27,7 @@ public class Address implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getProvince() {
-		return province;
-	}
-	public void setProvince(String province) {
-		this.province = province;
-	}
-	public String getDistrict() {
-		return district;
-	}
-	public void setDistrict(String district) {
-		this.district = district;
-	}
-	public String getWard() {
-		return ward;
-	}
-	public void setWard(String ward) {
-		this.ward = ward;
-	}
+	
 	public String getDetail() {
 		return detail;
 	}
@@ -59,7 +40,5 @@ public class Address implements Serializable {
 	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
-	public String toString() {
-		return getWard() + " " + getDistrict() + " " + getProvince();
-	}
+	
 }

@@ -8,7 +8,7 @@
 	
   	<servlet>
         <servlet-name>servlet1</servlet-name>
-        <servlet-class>web.Login</servlet-class>
+        <servlet-class>web.Common</servlet-class>
     </servlet>
   	<servlet-mapping>
 	    <servlet-name>servlet1</servlet-name>
@@ -46,6 +46,30 @@
   	<servlet-mapping>
 	    <servlet-name>servlet5</servlet-name>
 	    <url-pattern>/Search</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet6</servlet-name>
+        <servlet-class>web.Book</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet6</servlet-name>
+	    <url-pattern>/Book</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet7</servlet-name>
+        <servlet-class>web.OrderHistory</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet7</servlet-name>
+	    <url-pattern>/OrderHistory</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>servlet8</servlet-name>
+        <servlet-class>web.Profile</servlet-class>
+    </servlet>
+  	<servlet-mapping>
+	    <servlet-name>servlet8</servlet-name>
+	    <url-pattern>/Profile</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

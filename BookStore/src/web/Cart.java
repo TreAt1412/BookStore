@@ -81,7 +81,7 @@ public class Cart extends HttpServlet {
 			totalAmount += b.getPrice();
 		}
 		Address address = dao.getAddressByID(accountID);
-		request.setAttribute("address", address.toString());
+		request.setAttribute("address", address.getDetail());
 		request.setAttribute("totalAmount", totalAmount);
 		request.setAttribute("listBook", cart);
 		System.out.println("11");

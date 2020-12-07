@@ -30,16 +30,16 @@
                 <input type="checkbox" class="check-box"> <span>Nhớ mật khẩu</span>
                 <button type="submit" class="submit-btn">Đăng Nhập</button>
             </form>
-            <form id="register" action="" class="input-group">
-                <input type="text" class="input-field" placeholder="Name" required>
-                <input type="text" class="input-field" placeholder="User Name" required>
-                <input type="password" class="input-field" placeholder="Enter Password"
+            <form id="register" action="doregister" class="input-group">
+                <input type="text" class="input-field" placeholder="Name" name ="name" required>
+                <input type="text" class="input-field" placeholder="User Name" name="username" required>
+                <input type="password" class="input-field" placeholder="Enter Password" name="password"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     title="Mật khẩu cần ít nhất 8 ký tự gồm chữ hoa, chữ thường và số " required>
-                <input type="text" class="input-field" placeholder="Address" required>
-                <input type="email" class="input-field" placeholder="Email"
+                <input type="text" class="input-field" placeholder="Address" name="address" required>
+                <input type="email" class="input-field" placeholder="Email" name="email"
                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Hãy điền đúng email" required>
-                <input type="text" class="input-field" placeholder="Phone Number" pattern="[0-9]{10}"
+                <input type="text" class="input-field" placeholder="Phone Number" name="phone" pattern="[0-9]{10}"
                     title="Số điện thoại gồm 10 chứ số" required>
                 <input type="checkbox" class="check-box"> <span>Tôi đồng ý với các điều khoản !</span>
                 <button type="submit" class="submit-btn">Đăng Ký</button>

@@ -52,7 +52,7 @@
         <!-- for nav bar -->
         <div class="header-link">
             <div class="book-order">
-                <form class="myform" action="Cart" method="post">
+                <form class="myform" action="OrderHistory" method="post">
                     <button class="control-btn">
                         <i class="fa fa-shopping-bag fa-lg"></i>
                         <span>Đơn hàng </span>

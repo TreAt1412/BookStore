@@ -61,10 +61,8 @@ public class DAO {
         
         re = ps.executeQuery();
         while (re.next()) {
-       	 	String ward = re.getString(4);
-       	 	String district = re.getString(3);
-       	 	String province = re.getString(2);
-       	 	a = new Address(0,province, district, ward,"", customerid);
+       	 	String detail = re.getString(2);
+       	 	a = new Address(0,detail, customerid);
         }
         ps.close();
         return a;
@@ -213,8 +211,6 @@ public class DAO {
 		}
 		ps.close();
 		List<Book> lb = getCartByCustomerID(customerID);
-		//add orderDetail
-		System.out.println("Adding...");
 		for(Book b : lb) {
 			
 			sql = "insert into oderdetail (bookID, quantity, orderID) values ";
