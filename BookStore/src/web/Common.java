@@ -44,7 +44,6 @@ public class Common extends HttpServlet {
 			switch (action) {
 			case "/CreateOrder":
 				createOrder(request, response);
-				System.out.println("action: " + action);
 				break;
 			case "/register":
 				//showRegisterPage(request, response);
@@ -120,7 +119,14 @@ public class Common extends HttpServlet {
 			
 		}
 		
-		dao.createOrder(price, type, address, accountID);
+		int[] check = dao.createOrder(price, type, address, accountID);
+		if(check[0] == 1) {
+			response.addCookie(new Cookie("message", "Success"));
+			System.out.println("Thanh cong");
+		}
+		else {
+			response.addCookie(new Cookie("message",String.valueOf(check[1])));
+		}
 		response.sendRedirect("Cart");
 	}
 

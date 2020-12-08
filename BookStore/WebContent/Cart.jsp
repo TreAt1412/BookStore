@@ -141,9 +141,24 @@
                 </a>
             </div>
         </div>
+       
         <div id="display-cart">
             <div id="display-cart-1"><span>Giỏ hàng</span></div>
         </div>
+         <% String message = request.getAttribute("message").toString();
+        	if(message.equals("Thêm thành công")){
+	        %>
+	        	<p>Thanh toán thành công</p>
+	        <%}
+	        	else if (message.equals("")){
+	        	}
+	        	else{
+	        %>
+	        	<p>${message } </p>
+	        <%
+	        	}
+	        %>
+        	
         <div id="cart-products-inner">
             <ul class="cart-products">
                 <c:forEach var="book" items="${listBook}" varStatus="myIndex">
@@ -210,7 +225,7 @@
 			        		<br>
 					        <div>Phí giao hàng: <span id="feeShip"></span>đ</div>
 					        <br>
-					        <input type="hidden" name="totalPrice" value="<%=request.getAttribute("totalAmount") %>">
+					        <input type="hidden" name="price" value="<%=request.getAttribute("totalAmount") %>">
 					        <div>Tổng giá: <span name = "totalPrice" id="totalPrice"><%out.println(request.getAttribute("totalAmount"));%>
 					                    </span>
 					        </div>

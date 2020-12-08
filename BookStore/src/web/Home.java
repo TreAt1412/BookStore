@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,9 @@ String action = request.getServletPath();
 			}
 		} catch (SQLException e) {
 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -56,9 +60,30 @@ String action = request.getServletPath();
 	}
 	
 	private void showHomePage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, SQLException{
+			throws Exception{
 		RequestDispatcher dispatcher = null;
-		System.out.println(111);
+		String message = "";
+		Cookie[] cookies = request.getCookies();
+		for(Cookie c : cookies) {
+			if(c.getName().equals("message")) {
+				message = c.getValue();
+				break;
+			}
+		}
+		
+		if(message.equals("Success")) {
+			request.setAttribute("message", "Thêm thành công");
+		}
+		else if(message.equals("")) {
+			request.setAttribute("message", "");
+		}
+		else {
+			int bookid = Integer.parseInt(message);
+			String bookName = dao.getBookByID(bookid).getName();
+			request.setAttribute("message", "Thêm sách "+ bookName +" thất bại!");
+		}
+		response.addCookie(new Cookie("message", ""));
+		
 		request.setAttribute("listBook", dao.getAllBooks());
 		dispatcher = request.getRequestDispatcher("HomePage.jsp");
 		

@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.mysql.cj.protocol.Resultset;
 
+import javafx.beans.binding.ListBinding;
 import model.Address;
 import model.Book;
 import model.OderDetail;
@@ -87,6 +88,26 @@ public class DAO {
         return b;
 	}
 	
+	public int getQuantityBook(int id) throws Exception{
+		Book b = getBookByID(id);
+		return b.getQuantity();
+	}
+	public int getQuantityByCus(int customerID, int bookID) throws SQLException{
+		String sql = "select cartdetail.quantity\r\n" + 
+				"from cart, cartdetail\r\n" + 
+				"where cart.id = cartdetail.cartID\r\n" + 
+				"and cart.customerID = ?\r\n" + 
+				"and cartdetail.bookID = ?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, customerID);
+        ps.setInt(2, bookID);
+        re = ps.executeQuery();
+        int quantity = 0;
+        while(re.next()) {
+        	quantity = re.getInt(1);
+        }
+        return quantity;
+	}
 	public List<Book> getCartByCustomerID(int customerid) throws Exception{
 		String sql = "SELECT bookID, quantity FROM cartdetail, cart WHERE";
         sql+=" cartdetail.cartID = cart.id and ";
@@ -125,7 +146,6 @@ public class DAO {
 		try {
 			statement = connection.prepareStatement(sql);
 
-			System.out.println(sql);
 			rs = statement.executeQuery();
 
 			listBook = new ArrayList<Book>();
@@ -157,40 +177,61 @@ public class DAO {
 		}
         return listBook;
 	}
-	public int addToCart(int accountID, int bookID, int quantity)throws  Exception{
+	
+	public int[] addToCart(int accountID, int bookID, int quantity)throws  Exception{
 		int cartID =0;
 		
 		String sql = "SELECT id FROM cart WHERE";
-        sql+=" customerID = ?";
+        sql+=" customerID = ?;";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, String.valueOf(accountID));
+        ps.setInt(1, accountID);
         re = ps.executeQuery();
-        System.out.println(ps);
-        
         while (re.next()) {
-       	 cartID= re.getInt(1);
-        }
-        
+          	 cartID= re.getInt(1);
+           }
+        int slk = getQuantityBook(bookID);
+        int slcd = getQuantityByCus(accountID, bookID);
+        if(slk < slcd + quantity)
+        	return new int[] {-1, bookID};
+       
         if(cartID != 0) {
         	sql = "insert into cartdetail (cartID, bookID, quantity)";
             sql+="values (?,?,?)";
-            sql += "on duplicate key update quantity = quantity + 1";
+            sql += "on duplicate key update quantity = quantity + ?";
              ps = connection.prepareStatement(sql);
              ps.setInt(1, cartID);
              ps.setInt(2, bookID);
              ps.setInt(3, quantity);
-             System.out.println(ps);
-             
+             ps.setInt(4, quantity);
              int result  = ps.executeUpdate();
-             System.out.println("result = "+ result);
+            
              if(result >= 0)
-            	 return 1;
-             return -1;
+            	 return new int[] {1};
+             return new int[] {-1, bookID};
         }
         ps.close();
-		return -1;
+        return new int[] {-1, bookID};
 	}
-	public int createOrder(int price, int type, String address, int customerID ) throws Exception {
+	
+	public void subQuantity(int id, int quantity) throws SQLException {
+		String sql = "update book\r\n" + 
+				"set quantity = quantity - ?\r\n" + 
+				"where id = ?";
+		PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		ps.setInt(1, quantity);
+		ps.setInt(2, id);
+		ps.executeUpdate();
+		
+	}
+	
+	public int[] createOrder(int price, int type, String address, int customerID ) throws Exception {
+		
+		List<Book> lb = getCartByCustomerID(customerID);
+		for(Book b : lb) {
+			if(b.getQuantity() > getQuantityBook(b.getId())) {
+				return new int[] {0, b.getId()};
+			}
+		}
 		
 		java.util.Date date=new java.util.Date();
 		Date d = new Date(date.getTime());
@@ -210,7 +251,6 @@ public class DAO {
 			orderID = re.getInt(1);
 		}
 		ps.close();
-		List<Book> lb = getCartByCustomerID(customerID);
 		for(Book b : lb) {
 			
 			sql = "insert into oderdetail (bookID, quantity, orderID) values ";
@@ -220,7 +260,8 @@ public class DAO {
 			ps.setInt(2, b.getQuantity());
 			ps.setInt(3, orderID);
 			ps.executeUpdate();
-	
+			
+			subQuantity(customerID, b.getQuantity());
 					
 		}
 		
@@ -232,9 +273,8 @@ public class DAO {
 		ps = connection.prepareStatement(sql);
 		ps.setInt(1, customerID);
 		ps.executeUpdate();
-		System.out.println("Update success....");
 		
-		return 0;
+		return new int[] {1,0};
 		
 	}
 }

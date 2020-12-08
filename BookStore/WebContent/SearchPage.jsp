@@ -140,6 +140,19 @@
                 </a>
             </div>
         </div>
+        <% String message = request.getAttribute("message").toString();
+        	if(message.equals("Thêm thành công")){
+        %>
+        	<p>Thêm thành công</p>
+        <%}
+        	else if (message.equals("")){
+        	}
+        	else{
+        %>
+        	<p>${message } </p>
+        <%
+        	}
+        %>
         <div class="display-book">
             <h2>Những tác phẩm hiện có</h2>
             <c:forEach var="book" items="${listBook}">

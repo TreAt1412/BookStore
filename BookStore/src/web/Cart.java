@@ -66,15 +66,29 @@ public class Cart extends HttpServlet {
 	private void showCart(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		int accountID = 0;
 		Cookie[] cookies = request.getCookies();
-		
+		String message = "";
 		if(cookies!=null){
 			for(Cookie cookie:cookies){
 				if(cookie.getName().equals("accountID"))
 					accountID = Integer.parseInt(cookie.getValue());
+				if(cookie.getName().equals("message"))
+					message = cookie.getValue();
 			}
 			
 		}
 		
+		if(message.equals("Success")) {
+			request.setAttribute("message", "Thanh toán thành công");
+		}
+		else if(message.equals("")) {
+			request.setAttribute("message", "");
+		}
+		else {
+			int bookid = Integer.parseInt(message);
+			String bookName = dao.getBookByID(bookid).getName();
+			request.setAttribute("message", "Số lượng sách "+ bookName +" không đủ!");
+		}
+		response.addCookie(new Cookie("message", ""));
 		List<Book> cart = dao.getCartByCustomerID(accountID);
 		int totalAmount= 0;
 		for(Book b : cart) {
@@ -84,7 +98,6 @@ public class Cart extends HttpServlet {
 		request.setAttribute("address", address.getDetail());
 		request.setAttribute("totalAmount", totalAmount);
 		request.setAttribute("listBook", cart);
-		System.out.println("11");
 		request.getRequestDispatcher("Cart.jsp").forward(request, response);
 	}
 }

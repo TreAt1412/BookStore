@@ -46,7 +46,7 @@ public class Search extends HttpServlet {
 				showSearchPage(request, response);
 				break;
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 
 		}
 	}
@@ -60,16 +60,37 @@ public class Search extends HttpServlet {
 		doGet(request, response);
 	}
 	private void showSearchPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, SQLException{
+			throws Exception{
 		RequestDispatcher dispatcher = null;
 		String keyword = request.getParameter("keyword");
 		Cookie[] cookies = request.getCookies();
+		String message = "";
 		if(keyword == null) {
-			for(Cookie c : cookies)
+			for(Cookie c : cookies) {
 				if(c.getName().equals("keyword"))
 					keyword = c.getValue();
+				if(c.getName().equals("message")) {
+					message = c.getValue();
+					break;
+				}
+			}
+				
+				
 		}
-		System.out.println("keyword :  "+keyword);
+		
+		if(message.equals("Success")) {
+			request.setAttribute("message", "Thêm thành công");
+		}
+		else if(message.equals("")) {
+			request.setAttribute("message", "");
+		}
+		else {
+			int bookid = Integer.parseInt(message);
+			String bookName = dao.getBookByID(bookid).getName();
+			request.setAttribute("message", "Thêm sách "+ bookName +" thất bại!");
+		}
+		response.addCookie(new Cookie("message", ""));
+		
 		List<Book> lb =  dao.SearchBookByKeyword(keyword);
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("listBook",lb);

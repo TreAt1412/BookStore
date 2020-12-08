@@ -63,13 +63,16 @@ public class AddToCart extends HttpServlet {
 		int bookID = Integer.parseInt(request.getParameter("bookID"));
 		int accountID = Integer.parseInt((String) request.getParameter("accountID"));
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
-		System.out.println("bookID= "+bookID);
-		System.out.println("acc = "+ accountID);
-		int check = dao.addToCart(accountID, bookID, quantity);
-		if(check == 1)
+		int[] check = dao.addToCart(accountID, bookID, quantity);
+		if(check[0] == 1) {
+			response.addCookie(new Cookie("message", "Success"));
 			System.out.println("Thanh cong");
-		else
-			System.out.println("That bai");
+		}
+		else {
+			response.addCookie(new Cookie("message",String.valueOf(bookID)));
+		}
+			
+		
 		String  prePath = "";
 		Cookie[] cookies = request.getCookies();
 		
@@ -84,7 +87,7 @@ public class AddToCart extends HttpServlet {
 			response.sendRedirect("Home");
 		else if(prePath.equals("Cart"))
 			response.sendRedirect("Cart");
-		else {
+		else if(prePath.equals("Search")){
 			Cookie keywordCookie = new Cookie("keyword", request.getParameter("keyword"));
 			response.addCookie(keywordCookie);
 			response.sendRedirect("Search");
