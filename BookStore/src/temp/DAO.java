@@ -15,6 +15,8 @@ import com.mysql.cj.protocol.Resultset;
 import javafx.beans.binding.ListBinding;
 import model.Address;
 import model.Book;
+import model.Comment;
+import model.Customer;
 import model.OderDetail;
 
 public class DAO {
@@ -80,8 +82,12 @@ public class DAO {
 	}
 	
 	public int createAccount(String name, String username, String password, String phone, String email, String address) throws SQLException{
-		if(checkAccountExist(username) == -1)
-			return 1;
+		if(checkUsernameExist(username) == -1)
+			return -1;
+		if(checkPhoneExist(phone) == -1)
+			return -2;
+		if(checkEmailExist(email) == -1)
+			return -3;
 		
 		String sql="insert into customer (username, password, name, phone, email)\r\n" + 
 				"values  (?,?, ?, ?,?)";
@@ -91,7 +97,7 @@ public class DAO {
         ps.setString(3, name);
         ps.setString(4, phone);
         ps.setString(5, email);
-        ps.executeQuery();
+        ps.executeUpdate();
         re = ps.getGeneratedKeys();
         int accountID =0;
 		if(re.next()) {
@@ -101,19 +107,39 @@ public class DAO {
         ps = connection.prepareStatement(sql);
         ps.setString(1, address);
         ps.setInt(2, accountID);
-        ps.executeQuery();
+        ps.executeUpdate();
         
         sql = "insert into cart (customerID)   values(?)";
         ps = connection.prepareStatement(sql);
         ps.setInt(1, accountID);
-        ps.executeQuery();
+        ps.executeUpdate();
         return 1;
 	}
 	
-	public int checkAccountExist(String username) throws SQLException{
+	public int checkUsernameExist(String username) throws SQLException{
 		String sql = "select * from customer where username=?";
 		PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, username);
+        re=ps.executeQuery();
+        while(re.next()) {
+        	return -1;
+        }
+        return 1;
+	}
+	public int checkPhoneExist(String phone) throws SQLException{
+		String sql = "select * from customer where phone=?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, phone);
+        re=ps.executeQuery();
+        while(re.next()) {
+        	return -1;
+        }
+        return 1;
+	}
+	public int checkEmailExist(String email) throws SQLException{
+		String sql = "select * from customer where email=?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, email);
         re=ps.executeQuery();
         while(re.next()) {
         	return -1;
@@ -157,6 +183,25 @@ public class DAO {
         ps.close();
         return a;
 	}
+	
+	public Customer getCustomerByID(int customerid) throws SQLException{
+		
+		String sql ="select * from customer where id=?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+       	ps.setInt(1,customerid);
+       	re = ps.executeQuery();
+       	while(re.next()) {
+       		String name = re.getString(4);
+       		String phone = re.getString(5);
+       		String  email = re.getString(6);
+       		return new Customer(customerid, null, null, name, phone, email);
+       	}
+		return null;
+	}
+	
+	
+	
+	//------------------------------------------------------------------------------------------
 	public void deleteBookByCustomer(int accountID, int bookID) throws SQLException{
 		String sql = "delete cartdetail.* from cartdetail , cart\r\n" + 
 				"where \r\n" + 
@@ -212,34 +257,6 @@ public class DAO {
         }
         return quantity;
 	}
-	public List<Book> getCartByCustomerID(int customerid) throws Exception{
-		String sql = "SELECT bookID, quantity FROM cartdetail, cart WHERE";
-        sql+=" cartdetail.cartID = cart.id and ";
-        sql+= "cart.customerID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, customerid);
-        int index = 0;
-        int[] bookIdA = new int[1000];
-        int[] quantityA = new int[1000];
-        re = ps.executeQuery();
-        while(re.next()) {
-        	bookIdA[index] = re.getInt(1);
-        	quantityA[index] = re.getInt(2);
-        	index++;
-        }
-        
-       
-        List<Book> lb = new ArrayList<>();
-        for(int i =0;i<index;i++) {
-        	Book b = getBookByID(bookIdA[i]);
-        	lb.add(new Book(b.getId(), b.getUrl(),quantityA[i], b.getName(), b.getAuthor(),b.getPrice()*quantityA[i] ,b.getDetail()));
-        }
-       
-        ps.close();
-        return lb;
-		
-	}
-	
 
 	
 	public List<Book> getAllBooks() throws SQLException{
@@ -285,6 +302,55 @@ public class DAO {
         return listBook;
 	}
 	
+	//-----------------------------------------------------------------------------
+	
+	public List<Comment> getCommentByBook(int bookid) throws SQLException{
+		List<Comment> lc = new ArrayList<Comment>();
+		String sql = "SELECT * FROM bookstore.comment where bookID = ?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, bookid);
+        re = ps.executeQuery();
+        while(re.next()) {
+        	int id = re.getInt(1);
+        	String content = re.getString(2);
+        	int customerID = re.getInt(3);
+        	int bookID = re.getInt(4);
+        	lc.add(new Comment(id, content, customerID, bookID));
+        	
+        }
+        return lc;
+	}
+	
+	//-----------------------------------------------------------------------------
+	public List<Book> getCartByCustomerID(int customerid) throws Exception{
+		String sql = "SELECT bookID, quantity FROM cartdetail, cart WHERE";
+        sql+=" cartdetail.cartID = cart.id and ";
+        sql+= "cart.customerID = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, customerid);
+        int index = 0;
+        int[] bookIdA = new int[1000];
+        int[] quantityA = new int[1000];
+        re = ps.executeQuery();
+        while(re.next()) {
+        	bookIdA[index] = re.getInt(1);
+        	quantityA[index] = re.getInt(2);
+        	index++;
+        }
+        
+       
+        List<Book> lb = new ArrayList<>();
+        for(int i =0;i<index;i++) {
+        	Book b = getBookByID(bookIdA[i]);
+        	lb.add(new Book(b.getId(), b.getUrl(),quantityA[i], b.getName(), b.getAuthor(),b.getPrice()*quantityA[i] ,b.getDetail()));
+        }
+       
+        ps.close();
+        return lb;
+		
+	}
+	
+
 	
 	public int[] addToCart(int accountID, int bookID, int quantity)throws  Exception{
 		int cartID =0;
@@ -343,14 +409,15 @@ public class DAO {
 		
 		java.util.Date date=new java.util.Date();
 		Date d = new Date(date.getTime());
-		String sql = "insert into order1 (date, price, type, address, customerID) values ";
-		sql +="(?, ?, ?, ?, ? )";
+		String sql = "insert into order1 (date, price, type, address, customerID,status) values ";
+		sql +="(?, ?, ?, ?, ?,? )";
 		PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		ps.setDate(1, d);
 		ps.setInt(2, price);
 		ps.setInt(3, type);
 		ps.setString(4, address);
 		ps.setInt(5, customerID);
+		ps.setString(6, "Chờ xác nhận");
 	
 		int x = ps.executeUpdate();
 		int orderID =0;

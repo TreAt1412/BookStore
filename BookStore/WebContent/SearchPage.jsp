@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.util.*" import="java.io.*"%>
 <!DOCTYPE html>
@@ -140,19 +141,9 @@
                 </a>
             </div>
         </div>
-        <% String message = request.getAttribute("message").toString();
-        	if(message.equals("Thêm thành công")){
-        %>
-        	<p>Thêm thành công</p>
-        <%}
-        	else if (message.equals("")){
-        	}
-        	else{
-        %>
-        	<p>${message } </p>
-        <%
-        	}
-        %>
+       <c:if test="${fn:length(message) > 0}">
+			<p style="color:red; margin-left:80px"> <c:out value = "${message}"/></p>
+			</c:if>
         <div class="display-book">
             <h2>Những tác phẩm hiện có</h2>
             <c:forEach var="book" items="${listBook}">

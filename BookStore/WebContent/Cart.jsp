@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html>
 <html>
 
@@ -145,20 +146,9 @@
         <div id="display-cart">
             <div id="display-cart-1"><span>Giỏ hàng</span></div>
         </div>
-         <% String message = request.getAttribute("message").toString();
-        	if(message.equals("Thêm thành công")){
-	        %>
-	        	<p>Thanh toán thành công</p>
-	        <%}
-	        	else if (message.equals("")){
-	        	}
-	        	else{
-	        %>
-	        	<p>${message } </p>
-	        <%
-	        	}
-	        %>
-        	
+       <c:if test="${fn:length(message) > 0}">
+			<p style="color:red; margin-left:80px"> <c:out value = "${message}"/></p>
+			</c:if>
         <div id="cart-products-inner">
             <ul class="cart-products">
                 <c:forEach var="book" items="${listBook}" varStatus="myIndex">

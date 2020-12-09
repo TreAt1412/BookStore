@@ -46,16 +46,18 @@ public class Common extends HttpServlet {
 				createOrder(request, response);
 				break;
 			case "/register":
-				//showRegisterPage(request, response);
+				showRegisterPage(request, response);
 				break;
 			case "/doregister":
-				//insertAccount(request, response);
+				showRegisterPage(request, response);
 				break;
 			case "/login":
 				//showLoginPage(request, response);
 				break;
 			case "/dologin":
 				loginAccount(request, response);
+				break;
+			case "/changeprofile":
 				break;
 			default:
 				showLoginPage(request, response);
@@ -88,7 +90,7 @@ public class Common extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		if(accountID == -1) {
 			dispatcher = request.getRequestDispatcher("LoginPage.jsp");
-			request.setAttribute("loginFail", "Sai ten dang nhap hoac mat khau!");
+			request.setAttribute("loginFail", "Sai tên đăng nhập hoặc mật khẩu!");
 			dispatcher.forward(request, response);
 		}
 		else {
@@ -133,23 +135,39 @@ public class Common extends HttpServlet {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	public void showRegisterPage(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		String name= request.getParameter("name");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String address= request.getParameter("address");
+		String email= request.getParameter("email");
+		String phone= request.getParameter("phone");
+		
+		int check = dao.createAccount(name, username, password, phone, email, address);
+		
+		System.out.println("Check = " + check);
+		RequestDispatcher dispatcher = null;
+		if(check == -1) {
+			dispatcher = request.getRequestDispatcher("LoginPage.jsp");
+			request.setAttribute("registerFail", "Tài khoản đã được đăng kí!");
+			dispatcher.forward(request, response);
+		}
+		else if(check == 1){
+			dispatcher = request.getRequestDispatcher("LoginPage.jsp");
+			request.setAttribute("registerFail", "Tạo tài khoản thành công");
+			dispatcher.forward(request, response);
+		}
+		else if(check == -2) {
+			dispatcher = request.getRequestDispatcher("LoginPage.jsp");
+			request.setAttribute("registerFail", "Số điện thoại đã được đăng kí!");
+			dispatcher.forward(request, response);
+		}
+		else if(check == -3) {
+			dispatcher = request.getRequestDispatcher("LoginPage.jsp");
+			request.setAttribute("registerFail", "Email đã được đăng kí!");
+			dispatcher.forward(request, response);
+		}
+	}
 
 
 }

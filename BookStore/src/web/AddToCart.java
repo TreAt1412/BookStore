@@ -92,6 +92,11 @@ public class AddToCart extends HttpServlet {
 			response.addCookie(keywordCookie);
 			response.sendRedirect("Search");
 		}
+		else {
+			Cookie bookIDCookie = new Cookie("bookID", request.getParameter("bookID"));
+			response.addCookie(bookIDCookie);
+			response.sendRedirect("Book");
+		}
 			
 	}
 
