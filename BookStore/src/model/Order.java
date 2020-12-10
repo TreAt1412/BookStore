@@ -11,7 +11,8 @@ public class Order implements Serializable{
 	private int type;
 	private String address;
 	private int customerID;
-	public Order(int id, Date date, int price, int type, String address, int customerID) {
+	public String status;
+	public Order(int id, Date date, int price, int type, String address, int customerID ,String status) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -19,6 +20,7 @@ public class Order implements Serializable{
 		this.type = type;
 		this.address = address;
 		this.customerID = customerID;
+		this.status = status;
 	}
 	public int getId() {
 		return id;

@@ -5,7 +5,7 @@
 		http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 	<display-name>BookStore</display-name>
-	
+
   	<servlet>
         <servlet-name>servlet1</servlet-name>
         <servlet-class>web.Common</servlet-class>
@@ -71,5 +71,13 @@
 	    <servlet-name>servlet8</servlet-name>
 	    <url-pattern>/Profile</url-pattern>
 	</servlet-mapping>
-	
+	<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>BookStore</web-resource-name>
+        <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+</security-constraint>
 </web-app>

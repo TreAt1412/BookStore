@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -109,6 +108,12 @@ public class Common extends HttpServlet {
 	
 		String address = request.getParameter("address");
 		
+		if(type == 1)
+			price += 20000;
+		else if(type ==2)
+			price += 10000;
+		else
+			price += 5000;
 		
 		int accountID = 0;
 		Cookie[] cookies = request.getCookies();

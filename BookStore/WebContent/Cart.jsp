@@ -213,10 +213,10 @@
 		                 <div class="click-for-buy">
 			        		<div>Tạm tính: <%out.println(request.getAttribute("totalAmount"));%>đ</div>
 			        		<br>
-					        <div>Phí giao hàng: <span id="feeShip"></span>đ</div>
+					        <div>Phí giao hàng: <span id="feeShip"></span></div>
 					        <br>
 					        <input type="hidden" name="price" value="<%=request.getAttribute("totalAmount") %>">
-					        <div>Tổng giá: <span name = "totalPrice" id="totalPrice"><%out.println(request.getAttribute("totalAmount"));%>
+					        <div>Tổng giá: <span name = "totalPrice" id="totalPrice"><%out.println(request.getAttribute("totalAmount"));%>đ
 					                    </span>
 					        </div>
 					        <br>
@@ -241,14 +241,16 @@
 		                <div class="form-control form-checkbox">
 		                    <div class="label">Hình thức vận chuyển</div>
 		                    <div class="display1">
-		                        <input type="checkbox" name="type" onclick="document.getElementById('feeShip').innerHTML='20000';
-		                        	document.getElementById('totalPrice').innerHTML = eval('20000');" value="1">
+		                        <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML='20000đ';
+		                        	document.getElementById('totalPrice').innerHTML = eval('20000+' + ${totalAmount}) +'đ';" value="1">
 		                        <label for="">Giao hàng nhanh</label>
 		                        <br>
-		                        <input type="checkbox" name="type" onclick="setShipFee('2')" value="2">
+		                        <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML='10000đ';
+		                        	document.getElementById('totalPrice').innerHTML = eval('10000+' + ${totalAmount});" value="2">
 		                        <label for="">Giao trong ngày</label>
 		                        <br>
-		                        <input type="checkbox" name="type" onclick="setShipFee('3')" value="3">
+		                        <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML='5000đ';
+		                        	document.getElementById('totalPrice').innerHTML = eval('5000+' + ${totalAmount}) + 'đ';" value="3">
 		                        <label for="">Giao tiêu chuẩn</label>
 		                    </div>
 		                </div>
@@ -333,17 +335,19 @@
         function click_del_product() {
             document.getElementById("book-1").style.display = "none";
         }
-        function setShipFee(name) {
+        function setShipFee(name, amount) {
         	debugger;
             if (name == "1") {
                 document.getElementById("feeShip").text = "20000";
-                document.getElementById("totalPrice").innerHTML = eval("20000");
+                document.getElementById("totalPrice").innerHTML = eval("20000+"+ amount);
             }
             else if (name == "2") {
-                document.getElementById("feeShip").innerHTML = "10000";
+            	document.getElementById("feeShip").text = "10000";
+                document.getElementById("totalPrice").innerHTML = eval("10000+"+ amount);
             }
             else {
-                document.getElementById("feeShip").innerHTML = "5000";
+            	document.getElementById("feeShip").text = "5000";
+                document.getElementById("totalPrice").innerHTML = eval("5000+"+ amount);
             }
         }
         function display-form() {

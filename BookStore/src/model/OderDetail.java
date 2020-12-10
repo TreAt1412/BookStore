@@ -3,13 +3,14 @@ package model;
 import java.io.Serializable;
 
 public class OderDetail implements Serializable {
-	private int id, bookID, quantity;
+	private int id, bookID, quantity, orderid;
 
-	public OderDetail(int id, int bookID, int quantity) {
+	public OderDetail(int id, int bookID, int quantity, int orderid) {
 		super();
 		this.id = id;
 		this.bookID = bookID;
 		this.quantity = quantity;
+		this.orderid = orderid;
 	}
 
 	public int getId() {
@@ -35,5 +36,15 @@ public class OderDetail implements Serializable {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+	public int getOrderid() {
+		return orderid;
+	}
+
+	public void setOrderid(int orderid) {
+		this.orderid = orderid;
+	}
+
+	
 	
 }

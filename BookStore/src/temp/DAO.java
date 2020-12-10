@@ -12,12 +12,12 @@ import java.util.List;
 
 import com.mysql.cj.protocol.Resultset;
 
-import javafx.beans.binding.ListBinding;
 import model.Address;
 import model.Book;
 import model.Comment;
 import model.Customer;
 import model.OderDetail;
+import model.Order;
 
 public class DAO {
 	public static Connection connection;
@@ -25,7 +25,7 @@ public class DAO {
 
 	public DAO() {
 		try {
-			String connectString = "jdbc:mysql://localhost:3306/bookstore?useSSL=false&AllowPublicKeyRetrieval=true";
+			String connectString = "jdbc:mysql://localhost:3306/bookstore?useSSL=true&AllowPublicKeyRetrieval=true";
 	        Class.forName("com.mysql.jdbc.Driver");
 	        connection = (Connection) DriverManager.getConnection(connectString, "root", "123qweasd");
 	        
@@ -452,4 +452,76 @@ public class DAO {
 		return new int[] {1,0};
 		
 	}
+	
+	
+	//-----------------------------------------------------------------------------
+	public List<Order> getOrder(int accountid) throws SQLException{
+		List<Order> lo = new ArrayList<Order>();
+		
+		String sql = "SELECT * FROM order1 where customerID = ?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+		ps.setInt(1, accountid);
+		re = ps.executeQuery();
+		
+		while(re.next()) {
+			int id = re.getInt(1);
+			Date date = re.getDate(2);
+			int price = re.getInt(3);
+			int type = re.getInt(4);
+			String address = re.getString(5);
+			int customerID= re.getInt(6);
+			String status = re.getString(7);
+			lo.add(new Order(id, date, price, type, address, customerID, status));
+		}
+		return lo;
+	}
+	
+	public List<OderDetail> getOderDetail(int accountid) throws SQLException{
+		List<OderDetail> lod = new ArrayList<OderDetail>();
+		String sql = "SELECT oderdetail.* FROM oderdetail, order1\r\n" + 
+				"where oderdetail.orderID = order1.id\r\n" + 
+				"and order1.customerID = ?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+		ps.setInt(1, accountid);
+		re = ps.executeQuery();
+		
+		while(re.next()) {
+			int id = re.getInt(1);
+			int bookid = re.getInt(2);
+			int quantity = re.getInt(3);
+			int orderid = re.getInt(4);
+			lod.add(new OderDetail(orderid, bookid, quantity,orderid));
+		}
+		return lod;
+	}
+	
+	public void cancelOrder(int orderID) throws SQLException{
+		String sql  = "delete from order1 where id = ?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+		ps.setInt(1, orderID);
+		ps.executeUpdate();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

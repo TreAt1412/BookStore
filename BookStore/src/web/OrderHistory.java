@@ -2,13 +2,17 @@ package web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.OderDetail;
+import model.Order;
 import temp.DAO;
 
 /**
@@ -35,12 +39,12 @@ public class OrderHistory extends HttpServlet {
 		
 		try {
 			switch (action) {
-			case "/Profile":
-				showProfile(request, response);
+			case "/OrderHistory":
+				showOrderHistory(request, response);
 				
 				break;
 			default:
-				showProfile(request, response);
+				showOrderHistory(request, response);
 				break;
 			}
 		} catch (Exception e) {
@@ -56,8 +60,29 @@ public class OrderHistory extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	protected void showProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void showOrderHistory(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		int accountID = 0;
+		Cookie[] cookies = request.getCookies();
 		
+		if(cookies!=null){
+			for(Cookie cookie:cookies){
+				if(cookie.getName().equals("accountID"))
+					accountID = Integer.parseInt(cookie.getValue());
+			}
+			
+		}
+		
+		List<Order> lo = dao.getOrder(accountID);
+		List<OderDetail> lod = dao.getOderDetail(accountID);
+		List<String> lbookName = new ArrayList<String>();
+		for(OderDetail od : lod) {
+			lbookName.add(dao.getBookByID(od.getBookID()).getName());
+		}
+		
+		request.setAttribute("listOrder", lo);
+		request.setAttribute("listOrderDetail", lod);
+		request.setAttribute("listName", lbookName);
+		request.getRequestDispatcher("OrderHistory.jsp").forward(request, response);
 	}
 
 }
