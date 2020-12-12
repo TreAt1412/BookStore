@@ -331,7 +331,7 @@
         </div>
     </footer>
 
-    <script>
+    <script type="text/javascript">
         function click_del_product() {
             document.getElementById("book-1").style.display = "none";
         }

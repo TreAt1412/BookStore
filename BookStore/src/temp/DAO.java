@@ -48,14 +48,19 @@ public class DAO {
         }
         return acc;
 	}
-	public int updateInfo(int accountID, String address, String password, String name, String phone, String email) throws SQLException{
-		if(checkPassword(password, accountID) == -1)
+	public int updateInfo(int accountID, String address, String opassword, String npassword, String name, String phone, String email) throws SQLException{
+		if(checkPassword(opassword, accountID) == -1)
 			return 0;
+		if(checkPhoneExist(phone,accountID) == -1){
+			return -1;
+		}
+		if(checkEmailExist(email,accountID) == -1)
+			return -2;
 		String sql = "update customer\r\n" + 
 				"set password = ?, name=?, phone=?, email=?" + 
 				"where id = ?;";
 		PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, String.valueOf(password.hashCode()));
+        ps.setString(1, String.valueOf(npassword.hashCode()));
         ps.setString(2, name);
         ps.setString(3, phone);
         ps.setString(4, email);
@@ -84,9 +89,9 @@ public class DAO {
 	public int createAccount(String name, String username, String password, String phone, String email, String address) throws SQLException{
 		if(checkUsernameExist(username) == -1)
 			return -1;
-		if(checkPhoneExist(phone) == -1)
+		if(checkPhoneExist(phone,0) == -1)
 			return -2;
-		if(checkEmailExist(email) == -1)
+		if(checkEmailExist(email,0) == -1)
 			return -3;
 		
 		String sql="insert into customer (username, password, name, phone, email)\r\n" + 
@@ -126,25 +131,51 @@ public class DAO {
         }
         return 1;
 	}
-	public int checkPhoneExist(String phone) throws SQLException{
-		String sql = "select * from customer where phone=?";
-		PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, phone);
-        re=ps.executeQuery();
-        while(re.next()) {
-        	return -1;
-        }
-        return 1;
+	public int checkPhoneExist(String phone, int accountID) throws SQLException{
+		if(accountID == 0) {
+			String sql = "select * from customer where phone=?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+	        ps.setString(1, phone);
+	        re=ps.executeQuery();
+	        while(re.next()) {
+	        	return -1;
+	        }
+	        return 1;
+		}
+		else {
+			String sql = "select * from customer where phone=? and id != ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+	        ps.setString(1, phone);
+	        ps.setInt(2, accountID);
+	        re=ps.executeQuery();
+	        while(re.next()) {
+	        	return -1;
+	        }
+	        return 1;
+		}
 	}
-	public int checkEmailExist(String email) throws SQLException{
-		String sql = "select * from customer where email=?";
-		PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, email);
-        re=ps.executeQuery();
-        while(re.next()) {
-        	return -1;
-        }
-        return 1;
+	public int checkEmailExist(String email,int accountID) throws SQLException{
+		if(accountID == 0) {
+			String sql = "select * from customer where email=?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+	        ps.setString(1, email);
+	        re=ps.executeQuery();
+	        while(re.next()) {
+	        	return -1;
+	        }
+	        return 1;
+		}
+		else {
+			String sql = "select * from customer where email=? and id!= ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+	        ps.setString(1, email);
+	        ps.setInt(2, accountID);
+	        re=ps.executeQuery();
+	        while(re.next()) {
+	        	return -1;
+	        }
+	        return 1;
+		}
 	}
 	
 	public int checkAccount(String username, String password) throws SQLException{
@@ -192,6 +223,7 @@ public class DAO {
        	re = ps.executeQuery();
        	while(re.next()) {
        		String name = re.getString(4);
+       		
        		String phone = re.getString(5);
        		String  email = re.getString(6);
        		return new Customer(customerid, null, null, name, phone, email);
@@ -365,7 +397,7 @@ public class DAO {
            }
         int slk = getQuantityBook(bookID);
         int slcd = getQuantityByCus(accountID, bookID);
-        if(slk < slcd + quantity)
+        if(slk < slcd + quantity && quantity > 0)
         	return new int[] {-1, bookID};
        
         if(cartID != 0) {

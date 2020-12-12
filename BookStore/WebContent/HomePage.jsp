@@ -14,9 +14,7 @@
         <%@include file="/css/homeStyle.css"%>
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-
 </head>
-
 <body>
     <!-- header -->
     <header>
@@ -34,7 +32,6 @@
 					response.addCookie(pathCookie);
 					
 		%>
-
         <!-- for logo page -->
         <div class="logo">
             <h1><span style="color:white">Book</span> <span style="color:rgb(226, 215, 63)">Store</span></h1>
@@ -170,7 +167,6 @@
                     </div>
                 </div>
             </c:forEach>
-
         </div>
     </main>
     <footer>
@@ -244,5 +240,4 @@
         </div>
     </footer>
 </body>
-
 </html>

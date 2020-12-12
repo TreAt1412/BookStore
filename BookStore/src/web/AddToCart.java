@@ -63,12 +63,14 @@ public class AddToCart extends HttpServlet {
 		int accountID = Integer.parseInt((String) request.getParameter("accountID"));
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		int[] check = dao.addToCart(accountID, bookID, quantity);
-		if(check[0] == 1) {
-			response.addCookie(new Cookie("message", "Success"));
-			System.out.println("Thanh cong");
-		}
-		else {
-			response.addCookie(new Cookie("message",String.valueOf(bookID)));
+		if(quantity > 0) {
+			if(check[0] == 1) {
+				response.addCookie(new Cookie("message", "Success"));
+				System.out.println("Thanh cong");
+			}
+			else {
+				response.addCookie(new Cookie("message",String.valueOf(bookID)));
+			}
 		}
 			
 		

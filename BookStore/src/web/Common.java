@@ -57,6 +57,10 @@ public class Common extends HttpServlet {
 				loginAccount(request, response);
 				break;
 			case "/changeprofile":
+				updateInfor(request,response);
+				break;
+			case "/cancelorder":
+				deleteOrder(request,response);
 				break;
 			default:
 				showLoginPage(request, response);
@@ -173,6 +177,46 @@ public class Common extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-
+	public void updateInfor(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		String name= request.getParameter("name");
+		String npassword = request.getParameter("newpassword");
+		String opassword = request.getParameter("oldpassword");
+		String address= request.getParameter("address");
+		String email= request.getParameter("email");
+		String phone= request.getParameter("phone");
+		int accountID = 0;
+		Cookie[] cookies = request.getCookies();
+		if(cookies!=null){
+			for(Cookie cookie:cookies){
+				if(cookie.getName().equals("accountID"))
+					accountID = Integer.parseInt(cookie.getValue());
+			}
+			
+		}
+		int check = dao.updateInfo(accountID, address, opassword , npassword, name, phone, email);
+		
+		if(check == 1) {
+			response.addCookie(new Cookie("message", "Success"));
+			System.out.println("Thanh cong");
+		}
+		else if(check == 0){
+			response.addCookie(new Cookie("message","password"));
+		}
+		else if(check == -1) {
+			response.addCookie(new Cookie("message", "phone"));
+		}
+		else {
+			response.addCookie(new Cookie("message", "email"));
+		}
+		response.sendRedirect("Profile");
+	}
+	
+	private void deleteOrder(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		int orderID = Integer.parseInt(request.getParameter("orderID"));
+		dao.cancelOrder(orderID);
+		
+		response.sendRedirect("/OrderHistory");
+		
+	}
 
 }

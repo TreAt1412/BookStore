@@ -64,14 +64,35 @@ public class Profile extends HttpServlet {
 	private void ShowProfile(HttpServletRequest request, HttpServletResponse response)throws Exception{
 		int accountID = 0;
 		Cookie[] cookies = request.getCookies();
-		
+		String message ="";
 		if(cookies!=null){
 			for(Cookie cookie:cookies){
 				if(cookie.getName().equals("accountID"))
 					accountID = Integer.parseInt(cookie.getValue());
+				if(cookie.getName().equals("message"))
+					message = cookie.getValue();
 			}
 			
 		}
+		
+		if(message =="") {
+			request.setAttribute("message", "");
+		}
+		else if (message.equals("Success")) {
+			request.setAttribute("message", "Update thành công");
+		}
+		else if (message.equals("password")) {
+			request.setAttribute("message", "Mật khẩu sai");
+		}
+		else if (message.equals("email")) {
+			request.setAttribute("message", "Email đã được dùng bởi người khác");
+		}
+		else if (message.equals("phone")) {
+			request.setAttribute("message", "Số điện thoại đã được dùng bởi người khác");
+		}
+		
+		response.addCookie(new Cookie("message", ""));
+		
 		
 		Customer cus = dao.getCustomerByID(accountID);
 		Address address = dao.getAddressByID(accountID);
