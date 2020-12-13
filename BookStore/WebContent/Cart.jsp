@@ -172,7 +172,11 @@
                                             <c:out value="${book.quantity}" /></span>
                                     </div>
                                     <div class="click-del">
-                                        <button onclick="click_del_product()">Xóa</button>
+                                    	<form action="deleteBook" method="post">
+                                    	<input type="hidden" name="bookID" value="${book.id}">
+                                    	<input type="hidden" name="accountID" value="<%=accountID%>">
+                                        <button type="submit">Xóa</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +193,7 @@
                 </span>
 	            </div>
 	            <div class="click-order">
-	                <button id="open-form" onclick="document.getElementById('enter-inf-order').style.display='block';">Tiến
+	                <button id="open-form" onclick="if(${totalAmount} >0) document.getElementById('enter-inf-order').style.display = 'block';">Tiến
 	                    hành đặt hàng</button>
 	            </div>
 	            </div>
@@ -241,16 +245,18 @@
 		                <div class="form-control form-checkbox">
 		                    <div class="label">Hình thức vận chuyển</div>
 		                    <div class="display1">
-		                        <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML='20000đ';
-		                        	document.getElementById('totalPrice').innerHTML = eval('20000+' + ${totalAmount}) +'đ';" value="1">
+		                        <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML = '20000'+' đ';
+		                            document.getElementById('totalPrice').innerHTML = eval('20000+'+ ${totalAmount}) + 'đ';" value="1">
 		                        <label for="">Giao hàng nhanh</label>
 		                        <br>
-		                        <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML='10000đ';
-		                        	document.getElementById('totalPrice').innerHTML = eval('10000+' + ${totalAmount});" value="2">
+		                      <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML = '10000'+' đ';
+		                          document.getElementById('totalPrice').innerHTML = eval('10000+'+ ${totalAmount}) + 'đ';" value="2">
 		                        <label for="">Giao trong ngày</label>
 		                        <br>
-		                        <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML='5000đ';
-		                        	document.getElementById('totalPrice').innerHTML = eval('5000+' + ${totalAmount}) + 'đ';" value="3">
+		                        
+		                        
+		                        <input type="radio" name="type" onclick="document.getElementById('feeShip').innerHTML = '5000'+' đ';
+                document.getElementById('totalPrice').innerHTML = eval('5000+'+ ${totalAmount}) + 'đ';" value="3">
 		                        <label for="">Giao tiêu chuẩn</label>
 		                    </div>
 		                </div>
@@ -332,14 +338,12 @@
     </footer>
 
     <script type="text/javascript">
-        function click_del_product() {
-            document.getElementById("book-1").style.display = "none";
-        }
+        
         function setShipFee(name, amount) {
         	debugger;
             if (name == "1") {
                 document.getElementById("feeShip").text = "20000";
-                document.getElementById("totalPrice").innerHTML = eval("20000+"+ amount);
+                document.getElementById("totalPrice").innerHTML = eval("20000+"+ amount)+ "đ";
             }
             else if (name == "2") {
             	document.getElementById("feeShip").text = "10000";
@@ -347,10 +351,12 @@
             }
             else {
             	document.getElementById("feeShip").text = "5000";
-                document.getElementById("totalPrice").innerHTML = eval("5000+"+ amount);
+                document.getElementById("totalPrice").innerHTML = eval("5000+"+ amount) + "đ";
             }
         }
-        function display-form() {
+        
+        function display-form(amount) {
+        
             document.getElementById("enter-inf-order").style.display = "block";
         }
     </script>

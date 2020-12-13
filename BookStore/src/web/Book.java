@@ -74,7 +74,6 @@ public class Book extends HttpServlet {
 					bookid = Integer.parseInt(c.getValue());
 				if(c.getName().equals("message")) {
 					message = c.getValue();
-					break;
 				}
 			}
 		}
@@ -82,6 +81,7 @@ public class Book extends HttpServlet {
 			bookid = Integer.parseInt(bookidTemp);
 		}
 		
+		System.out.println("Bookid ="+ bookid);
 		model.Book b = dao.getBookByID(bookid);
 		
 		if(message.equals("Success")) {

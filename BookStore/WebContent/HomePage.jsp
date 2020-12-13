@@ -164,6 +164,10 @@
                             <input type="hidden" name="accountID" value="<%=accountID%>" />
                             <button type="submit">Mua</button>
                         </form>
+                        <form action="Book" method="post">
+                        <input type="hidden" name="bookID" value="${book.id}" />
+                        <button type="submit">Xem chi tiết</button>
+                        </form>
                     </div>
                 </div>
             </c:forEach>

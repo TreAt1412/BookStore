@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sound.midi.Soundbank;
+
 import com.mysql.cj.protocol.Resultset;
 
 import model.Address;
@@ -83,7 +85,7 @@ public class DAO {
         ps.setString(1, content);
         ps.setInt(2, accountID);
         ps.setInt(3, bookID);
-        ps.executeQuery();
+        ps.executeUpdate();
 	}
 	
 	public int createAccount(String name, String username, String password, String phone, String email, String address) throws SQLException{
@@ -327,11 +329,15 @@ public class DAO {
 	}
 	public List<Book> SearchBookByKeyword(String keyword) throws SQLException{
 		List<Book> listBook = getAllBooks();
+		List<Book> listBookr = new ArrayList<Book>();
+		System.out.println("keyword = "+keyword);
 		for(int i =0; i< listBook.size();i++) {
-			if(!listBook.get(i).getName().toLowerCase().contains(keyword.toLowerCase()))
-				listBook.remove(i);
+			if(listBook.get(i).getName().toLowerCase().contains(keyword.toLowerCase())) {
+				
+				listBookr.add(listBook.get(i));
+			}
 		}
-        return listBook;
+        return listBookr;
 	}
 	
 	//-----------------------------------------------------------------------------
@@ -397,8 +403,10 @@ public class DAO {
            }
         int slk = getQuantityBook(bookID);
         int slcd = getQuantityByCus(accountID, bookID);
-        if(slk < slcd + quantity && quantity > 0)
+        if(slk < slcd + quantity && quantity > 0) {
+        	System.out.println(slk+" "+slcd+" "+quantity);
         	return new int[] {-1, bookID};
+        }
        
         if(cartID != 0) {
         	sql = "insert into cartdetail (cartID, bookID, quantity)";
@@ -410,11 +418,12 @@ public class DAO {
              ps.setInt(3, quantity);
              ps.setInt(4, quantity);
              int result  = ps.executeUpdate();
-            
+             System.out.println(111);
              if(result >= 0)
             	 return new int[] {1};
              return new int[] {-1, bookID};
         }
+       
         ps.close();
         return new int[] {-1, bookID};
 	}

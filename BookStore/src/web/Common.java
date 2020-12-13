@@ -59,9 +59,16 @@ public class Common extends HttpServlet {
 			case "/changeprofile":
 				updateInfor(request,response);
 				break;
-			case "/cancelorder":
+			case "/cancelOrder":
 				deleteOrder(request,response);
 				break;
+			case "/deleteBook":
+				deleteBook(request,response);
+				break;
+			case "/comment":
+				comment(request, response);
+				break;
+				
 			default:
 				showLoginPage(request, response);
 				break;
@@ -215,8 +222,35 @@ public class Common extends HttpServlet {
 		int orderID = Integer.parseInt(request.getParameter("orderID"));
 		dao.cancelOrder(orderID);
 		
-		response.sendRedirect("/OrderHistory");
+		response.sendRedirect("OrderHistory");
 		
 	}
-
+	private void deleteBook(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		
+	
+		int accountID = Integer.parseInt(request.getParameter("accountID"));
+		
+		int bookID = Integer.parseInt(request.getParameter("bookID"));
+		
+		dao.deleteBookByCustomer(accountID, bookID);
+		
+		response.sendRedirect("Cart");
+		
+	}
+	private void comment(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		System.out.println(request.getParameter("accountID"));
+		int accountID = Integer.parseInt(request.getParameter("accountID"));
+		
+		int bookID = Integer.parseInt(request.getParameter("bookID"));
+		
+		String content = request.getParameter("content");
+		
+	
+		
+		System.out.println(content);
+		dao.comment(accountID, bookID, content);
+		response.addCookie(new Cookie("bookID", String.valueOf(bookID)));
+		response.sendRedirect("Book");
+	}
 }

@@ -1,0 +1,70 @@
+@charset "ISO-8859-1";
+
+.detail-book{
+	width: 50%;
+	height: 300px;
+	margin-left: 300px;
+	
+}
+
+.book-img{
+	width: 40%;
+	height: 100%;
+	float: left;
+	
+}
+.detail{
+	width: 55%;
+	height: 100%;
+	float: right;
+
+}
+.change{
+	background-color: #008CBA !important;
+}
+
+.quantity-input{
+	height: 22px;
+    width: 28px;
+}
+
+.submit{
+	background-color: red !important;
+	margin-top:10px;
+}
+
+.comment{
+	float: left;
+	width: 50%;
+	height: 600px;
+	margin-left: 400px;
+	
+}
+h2{
+	text-align: center;
+}
+#button-comment{
+	background-color: #00ffff !important;
+    float: left;
+    margin-left: 20px;
+}
+#comment-form{
+	width: 100%;
+	height: 80px;
+}
+.comment-item{
+	
+	height: 80px;
+	border-left :5px solid #00ffff;
+}
+p{
+	padding-left:10px;
+}
+textarea{
+	float: left;
+}
+ #home{
+	margin-top: 10px;
+	margin-left: 10px;
+	color:black;
+}

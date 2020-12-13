@@ -58,5 +58,17 @@ public class Order implements Serializable{
 	public void setCartID(int customerID) {
 		this.customerID = customerID;
 	}
+	public int getCustomerID() {
+		return customerID;
+	}
+	public void setCustomerID(int customerID) {
+		this.customerID = customerID;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
 }
